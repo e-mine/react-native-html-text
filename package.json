@@ -2,7 +2,6 @@
   "name": "@e-mine/react-native-html-text",
   "version": "0.1.1",
   "description": "Transform your HTML-formatted text into native styled Text elements.",
-  "private": false,
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
   "types": "lib/typescript/src/index.d.ts",
@@ -42,6 +41,9 @@
     "url": "https://github.com/e-mine/react-native-html-text/issues"
   },
   "homepage": "https://github.com/e-mine/react-native-html-text#readme",
+  "publishConfig": {
+    "access": "public"
+  },
   "devDependencies": {
     "@commitlint/config-conventional": "^8.3.4",
     "@react-native-community/bob": "^0.15.1",
