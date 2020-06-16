@@ -1,0 +1,29 @@
+{
+  "name": "react-native-html-text-example",
+  "description": "Example app for react-native-html-text",
+  "version": "0.0.1",
+  "private": true,
+  "main": "index",
+  "scripts": {
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "start": "expo start",
+    "test": "jest"
+  },
+  "dependencies": {
+    "expo": "~37.0.12",
+    "react": "~16.13.1",
+    "react-dom": "~16.13.1",
+    "react-native": "^0.62.2",
+    "react-native-unimodules": "~0.9.1",
+    "react-native-web": "~0.11.7"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.10.2",
+    "@babel/runtime": "^7.10.2",
+    "babel-plugin-module-resolver": "^4.0.0",
+    "babel-preset-expo": "~8.2.1",
+    "expo-cli": "^3.21.5"
+  }
+}
