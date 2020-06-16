@@ -2,6 +2,7 @@
   "name": "@e-mine/react-native-html-text",
   "version": "0.1.0",
   "description": "Transform your HTML-formatted text into native styled Text elements.",
+  "private": false,
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
   "types": "lib/typescript/src/index.d.ts",
