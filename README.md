@@ -1,21 +1,25 @@
-# react-native-html-text
+# @e-mine/react-native-html-text
 
 Transform your HTML-formatted text into native styled Text elements.
 
 ## Installation
 
 ```sh
-npm install react-native-html-text
+npm install @e-mine/react-native-html-text
 ```
 
 ## Usage
 
 ```js
-import HtmlText from "react-native-html-text";
+import { HtmlText } from "@e-mine/react-native-html-text";
 
 // ...
 
-const result = await HtmlText.multiply(3, 7);
+render() {
+    const html = `<b>This</b> is a <i>formatted</i> HTML text.`;
+
+    return <HtmlText>{html}</HtmlText>;
+}
 ```
 
 ## Contributing
