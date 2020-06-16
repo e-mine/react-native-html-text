@@ -46,7 +46,7 @@ export default class HtmlText extends React.PureComponent<TextProps> {
         const root = parse(content, { lowerCaseTagName: true, pre: true });
 
         const element = <Text style={style}>{this.renderNode(root, 1)}</Text>;
-        console.log(element);
+        //console.log(element);
         return element;
     }
 }
