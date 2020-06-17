@@ -18,6 +18,8 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 12
+      - run: git config --global user.email "contato@e-mine.com.br"
+      - run: git config --global user.name "e-mine software"
       - run: echo "//registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN" > .npmrc
       - run: npm ci
       - run: npm run build --if-present
