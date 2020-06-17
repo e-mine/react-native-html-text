@@ -1,10 +1,10 @@
 {
-  "name": "react-native-html-text-example",
+  "name": "@e-mine/react-native-html-text-example",
   "displayName": "HtmlText Example",
   "expo": {
-    "name": "react-native-html-text-example",
-    "slug": "react-native-html-text-example",
-    "description": "Example app for react-native-html-text",
+    "name": "@e-mine/react-native-html-text-example",
+    "slug": "@e-mine/react-native-html-text-example",
+    "description": "Example app for @e-mine/react-native-html-text",
     "privacy": "public",
     "version": "1.0.0",
     "platforms": [

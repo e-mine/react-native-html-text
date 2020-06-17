@@ -1,6 +1,6 @@
 {
-  "name": "react-native-html-text-example",
-  "description": "Example app for react-native-html-text",
+  "name": "@e-mine/react-native-html-text-example",
+  "description": "Example app for @e-mine/react-native-html-text",
   "version": "0.0.1",
   "private": true,
   "main": "index",
