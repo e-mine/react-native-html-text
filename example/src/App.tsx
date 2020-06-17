@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { HtmlText } from 'react-native-html-text';
+import { HtmlText, HtmlTextContext, defaultContextValues } from '@e-mine/react-native-html-text';
 
 export default function App() {
   const html = `<h1>HTML Ipsum &copy; Presents</h1>
@@ -31,10 +31,30 @@ export default function App() {
 }
 </code></pre>`;
 
+  const htmlTextContext = {
+    styles: {
+      ...defaultContextValues.styles,
+      ul: {
+        fontStyle: 'italic'
+      },
+      h1: {
+        fontSize: 26
+      },
+      h2: {
+        fontSize: 22
+      },
+      h3: {
+        fontSize: 18
+      }
+    }
+  };
+
   return (
-    <View style={styles.container}>
-      <HtmlText>{html}</HtmlText>
-    </View>
+    <HtmlTextContext.Provider value={htmlTextContext}>
+      <View style={styles.container}>
+        <HtmlText>{html}</HtmlText>
+      </View>
+    </HtmlTextContext.Provider>
   );
 }
 
