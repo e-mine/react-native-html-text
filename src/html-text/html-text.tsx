@@ -31,12 +31,12 @@ class HtmlText extends React.PureComponent<TextProps> {
     }
 
     render() {
-        const { children, style } = this.props;
+        const { children } = this.props;
 
         const content = String(children);
         const root = parse(content, { lowerCaseTagName: true, pre: true });
 
-        return <Text style={style}>{this.renderChildren(root, 1)}</Text>;
+        return <Text {...this.props}>{this.renderChildren(root, 1)}</Text>;
     }
 }
 
