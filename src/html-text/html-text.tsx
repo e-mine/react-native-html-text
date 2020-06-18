@@ -5,7 +5,12 @@ import { decode } from 'he';
 
 import { HtmlTextContext } from './html-text-context';
 
-class HtmlText extends React.PureComponent<TextProps> {
+type Props = TextProps & {
+    forwardedRef?: React.Ref<Text>,
+    children: string
+};
+
+class HtmlTextFormatter extends React.PureComponent<Props> {
 
     private renderChildren(node: any, index: number) {
         const { styles } = this.context;
@@ -31,15 +36,24 @@ class HtmlText extends React.PureComponent<TextProps> {
     }
 
     render() {
-        const { children } = this.props;
+        const { children, forwardedRef } = this.props;
 
         const content = String(children);
         const root = parse(content, { lowerCaseTagName: true, pre: true });
 
-        return <Text {...this.props}>{this.renderChildren(root, 1)}</Text>;
+        return <Text {...this.props} ref={forwardedRef}>{this.renderChildren(root, 1)}</Text>;
     }
 }
 
-HtmlText.contextType = HtmlTextContext;
+HtmlTextFormatter.contextType = HtmlTextContext;
 
-export default HtmlText;
+const HtmlText = (
+    props: Props,
+    forwardedRef?: React.Ref<Text>
+) => (<HtmlTextFormatter {...props} forwardedRef={forwardedRef} />);
+
+const HtmlTextToExport = React.forwardRef(HtmlText);
+
+HtmlTextToExport.displayName = 'HtmlText';
+
+export default HtmlTextToExport;
