@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, TextProps } from 'react-native';
+import { Text, TextProps, Linking } from 'react-native';
 import { parse, NodeType } from 'node-html-parser';
 import { decode } from 'he';
 import { toRN } from '../helpers/transform';
@@ -11,10 +11,14 @@ interface Predefinitions {
         content?: string;
         beforeContent?: string;
         afterContent?: string;
+        canHandleHref?: boolean;
     }
 }
 
 const predefinitions: Predefinitions = {
+    a: {
+        canHandleHref: true
+    },
     address: {
         afterContent: '\n'
     },
@@ -97,7 +101,35 @@ const predefinitions: Predefinitions = {
     li: {
         afterContent: '\n'
     },
+    menu: {
+        afterContent: '\n'
+    },
+    nav: {
+        afterContent: '\n'
+    },
+    ol: {
+        afterContent: '\n'
+    },
     p: {
+        afterContent: '\n'
+    },
+    pre: {
+        afterContent: '\n'
+    },
+    section: {
+        afterContent: '\n'
+    },
+    summary: {
+        afterContent: '\n'
+    },
+    table: {
+        beforeContent: '\n',
+        afterContent: '\n'
+    },
+    tr: {
+        afterContent: '\n'
+    },
+    ul: {
         afterContent: '\n'
     }
 };
@@ -106,14 +138,18 @@ const isValidStyle = (style?: any) =>
     Object.keys(style || {}).length > 0;
 
 type HtmlTextProps = {
-    forwardedProps: React.PropsWithChildren<TextProps>,
+    children: string
+} & TextProps;
+
+type HtmlTextFormattedProps = {
+    forwardedProps: React.PropsWithChildren<HtmlTextProps>,
     forwardedRef?: React.Ref<Text>
 } & TextProps;
 
-class HtmlTextFormatter extends React.PureComponent<HtmlTextProps> {
+class HtmlTextFormatter extends React.PureComponent<HtmlTextFormattedProps> {
 
     private renderChildren(node: any, index: number) {
-        const { styles } = this.context;
+        const { styles, allowLinks } = this.context;
 
         return node.childNodes.map((childNode: any, nodeIndex: number) => {
             if (childNode.nodeType === NodeType.ELEMENT_NODE) {
@@ -124,6 +160,14 @@ class HtmlTextFormatter extends React.PureComponent<HtmlTextProps> {
                     return predefinition?.content;
                 }
 
+                const customProps: TextProps = {};
+                if (allowLinks === true && predefinition?.canHandleHref === true) {
+                    const href = childNode.getAttribute('href');
+                    if (Linking.canOpenURL(href)) {
+                        customProps.onPress = () => Linking.openURL(href);
+                    }
+                }
+
                 const style = styles[tagName];
                 const inlineStyle = toRN(childNode.getAttribute('style'));
                 const content = this.renderChildren(childNode, index + 1);
@@ -132,7 +176,7 @@ class HtmlTextFormatter extends React.PureComponent<HtmlTextProps> {
                     predefinition?.beforeContent,
                     (
                         isValidStyle(style) || isValidStyle(inlineStyle)
-                            ? <Text key={index * nodeIndex} style={[style, inlineStyle]}>{content}</Text>
+                            ? <Text {...customProps} key={index * nodeIndex} style={[style, inlineStyle]}>{content}</Text>
                             : content
                     ),
                     predefinition?.afterContent
@@ -159,11 +203,7 @@ class HtmlTextFormatter extends React.PureComponent<HtmlTextProps> {
 
 HtmlTextFormatter.contextType = HtmlTextContext;
 
-type ForwardedProps = {
-    children: string
-} & TextProps;
-
-const HtmlText = (props: ForwardedProps, ref?: React.Ref<Text>) =>
+const HtmlText = (props: HtmlTextProps, ref?: React.Ref<Text>) =>
     <HtmlTextFormatter forwardedProps={props} forwardedRef={ref} />;
 
 const HtmlTextToExport = React.forwardRef(HtmlText);

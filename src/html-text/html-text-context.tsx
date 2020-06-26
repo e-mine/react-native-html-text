@@ -23,11 +23,13 @@ const standardStyles: ElementStyles = {
     }
 };
 
-interface HtmlContextDefinitions {
+export interface HtmlTextContextValue {
+    allowLinks: boolean,
     styles: ElementStyles
 }
 
-const defaultValues: HtmlContextDefinitions = {
+export const defaultContextValues: HtmlTextContextValue = {
+    allowLinks: false,
     styles: {
         a: {
             ...standardStyles.underline,
@@ -35,6 +37,9 @@ const defaultValues: HtmlContextDefinitions = {
         },
         address: {
             ...standardStyles.italic
+        },
+        area: {
+            display: 'none'
         },
         b: {
             ...standardStyles.bold
@@ -51,6 +56,9 @@ const defaultValues: HtmlContextDefinitions = {
         },
         code: {
             ...standardStyles.monospace
+        },
+        datalist: {
+            display: 'none'
         },
         dd: {
             marginLeft: 40
@@ -110,6 +118,9 @@ const defaultValues: HtmlContextDefinitions = {
             marginVertical: '2.33em',
             fontWeight: 'bold'
         },
+        head: {
+            display: 'none'
+        },
         hr: {
             ...standardStyles.lineThrough,
             marginVertical: '0.5em'
@@ -126,16 +137,79 @@ const defaultValues: HtmlContextDefinitions = {
         legend: {
             paddingHorizontal: 2
         },
+        link: {
+            display: 'none'
+        },
         mark: {
             backgroundColor: 'yellow',
             color: 'black'
         },
+        menu: {
+            marginVertical: '1em',
+            paddingLeft: 40
+        },
+        ol: {
+            marginVertical: '1em',
+            paddingLeft: 40
+        },
+        p: {
+            marginVertical: '1em'
+        },
+        param: {
+            display: 'none'
+        },
+        pre: {
+            ...standardStyles.monospace,
+            marginVertical: '1em'
+        },
+        s: {
+            ...standardStyles.lineThrough
+        },
+        samp: {
+            ...standardStyles.monospace
+        },
+        script: {
+            display: 'none'
+        },
+        small: {
+            fontSize: 11
+        },
+        strike: {
+            ...standardStyles.lineThrough
+        },
         strong: {
             ...standardStyles.bold
+        },
+        style: {
+            display: 'none'
+        },
+        sub: {
+            textAlignVertical: 'bottom',
+            fontSize: 11
+        },
+        sup: {
+            textAlignVertical: 'top',
+            fontSize: 11
+        },
+        table: {
+            borderWidth: 1,
+            borderStyle: 'solid',
+            borderColor: 'gray'
+        },
+        title: {
+            display: 'none'
+        },
+        u: {
+            ...standardStyles.underline
+        },
+        ul: {
+            marginVertical: '1em',
+            paddingLeft: 40
+        },
+        var: {
+            ...standardStyles.italic
         }
     }
 };
 
-const HtmlTextContext = React.createContext(defaultValues);
-
-export { HtmlTextContext, defaultValues as defaultContextValues };
+export const HtmlTextContext = React.createContext(defaultContextValues);
