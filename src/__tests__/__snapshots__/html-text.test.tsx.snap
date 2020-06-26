@@ -1,9 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`HtmlText component renders correctly 1`] = `
-<Text
-  forwardedRef={null}
->
+<Text>
   undefined
 </Text>
 `;
