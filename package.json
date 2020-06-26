@@ -146,7 +146,9 @@
     ]
   },
   "dependencies": {
+    "css-to-react-native": "~3.0.0",
+    "he": "~1.2.0",
     "node-html-parser": "~1.2.19",
-    "he": "~1.2.0"
+    "postcss-js": "~2.0.3"
   }
 }
