@@ -164,7 +164,7 @@ class HtmlTextFormatter extends React.PureComponent<HtmlTextFormattedProps> {
                 if (allowLinks === true && predefinition?.canHandleHref === true) {
                     const href = childNode.getAttribute('href');
                     if (Linking.canOpenURL(href)) {
-                        customProps.onPress = () => Linking.openURL(href);
+                        customProps.onPress = () => { Linking.openURL(href) };
                     }
                 }
 
