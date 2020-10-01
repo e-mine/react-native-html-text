@@ -153,7 +153,7 @@ class HtmlTextFormatter extends React.PureComponent<HtmlTextFormattedProps> {
 
         return node.childNodes.map((childNode: any, nodeIndex: number) => {
             if (childNode.nodeType === NodeType.ELEMENT_NODE) {
-                const tagName = childNode.tagName;
+                const tagName = childNode.tagName?.toLowerCase();
 
                 const predefinition = predefinitions[tagName];
                 if (predefinition?.content) {
@@ -195,7 +195,7 @@ class HtmlTextFormatter extends React.PureComponent<HtmlTextFormattedProps> {
         const { forwardedRef, forwardedProps } = this.props;
 
         const content = String(forwardedProps.children);
-        const root = parse(content, { lowerCaseTagName: true, pre: true });
+        const root = parse(content, { pre: true });
 
         return <Text {...forwardedProps} ref={forwardedRef}>{this.renderChildren(root, 1)}</Text>;
     }
