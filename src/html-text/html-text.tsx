@@ -137,6 +137,30 @@ const predefinitions: Predefinitions = {
 const isValidStyle = (style?: any) =>
     Object.keys(style || {}).length > 0;
 
+const mapStyles = (baseFontSize: number, styles: any[]): any => {
+    const normalize = (style: any) => {
+        const result: any = {};
+        if (style) {
+            for (const key of Object.keys(style)) {
+                let value = style[key];
+                if (/^(\-|\+)?([0-9]+(\.[0-9]+)?)em$/.test(String(value))) { // Handle "em" values
+                    const size = parseFloat(value);
+                    value = size * baseFontSize;
+                }
+                result[key] = value;
+            }
+        }
+        return result;
+    };
+
+    const style = styles.reduce((result, style) => Object.assign(result, normalize(style)), {});
+
+    return {
+        fontSize: style?.fontSize || baseFontSize,
+        style
+    };
+};
+
 type HtmlTextProps = {
     children: string
 } & TextProps;
@@ -148,7 +172,7 @@ type HtmlTextFormattedProps = {
 
 class HtmlTextFormatter extends React.PureComponent<HtmlTextFormattedProps> {
 
-    private renderChildren(node: any, index: number) {
+    private renderChildren(node: any, index: number, baseFontSize: number = 16) {
         const { styles, allowLinks } = this.context;
 
         return node.childNodes.map((childNode: any, nodeIndex: number) => {
@@ -164,19 +188,18 @@ class HtmlTextFormatter extends React.PureComponent<HtmlTextFormattedProps> {
                 if (allowLinks === true && predefinition?.canHandleHref === true) {
                     const href = childNode.getAttribute('href');
                     if (Linking.canOpenURL(href)) {
-                        customProps.onPress = () => { Linking.openURL(href) };
+                        customProps.onPress = () => Linking.openURL(href);
                     }
                 }
 
-                const style = styles[tagName];
-                const inlineStyle = toRN(childNode.getAttribute('style'));
-                const content = this.renderChildren(childNode, index + 1);
+                const { style, fontSize } = mapStyles(baseFontSize, [styles[tagName], toRN(childNode.getAttribute('style'))]);
+                const content = this.renderChildren(childNode, index + 1, fontSize);
 
                 return [
                     predefinition?.beforeContent,
                     (
-                        isValidStyle(style) || isValidStyle(inlineStyle)
-                            ? <Text {...customProps} key={index * nodeIndex} style={[style, inlineStyle]}>{content}</Text>
+                        isValidStyle(style)
+                            ? <Text {...customProps} key={index * nodeIndex} style={style}>{content}</Text>
                             : content
                     ),
                     predefinition?.afterContent
